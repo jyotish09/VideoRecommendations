@@ -43,5 +43,3 @@ That's for two users , now we need to sample that user's likes & dislikes set to
         |ML|+|MD| - The total number of users who have liked or disliked the movie M.
 
     PS : P(U,M) will be between -1.0 and 1.0.
-
-(IMG sources taken from wiki and TopTal for the equations/venn diagram).
