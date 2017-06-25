@@ -9,7 +9,7 @@ A recommendation engine is a feature of a product that can filter the data to a 
 Before we start the idea is to make simple one enough to grasp the concept and the code behind it.Also there's a couple of to-do items to do before we start writing the code. I'll update as I proceed
 
     [X] The Math behind the Similarity Index
-    [ ] Tech Stacks Required to build the project
+    [X] Tech Stacks Required to build the project
     [ ] The real code
 
 #### The Math
@@ -45,7 +45,7 @@ That's for two users , now we need to sample that user's likes & dislikes set to
     PS : P(U,M) will be between -1.0 and 1.0.
 
 
-### Tech Stacks Required
+#### Tech Stacks Required
 
 * [ReactJS](https://facebook.github.io/react/) - Interactive UI boilerplate
 * [Firebase](https://firebase.google.com/) - Database
