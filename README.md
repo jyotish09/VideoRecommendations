@@ -43,3 +43,12 @@ That's for two users , now we need to sample that user's likes & dislikes set to
         |ML|+|MD| - The total number of users who have liked or disliked the movie M.
 
     PS : P(U,M) will be between -1.0 and 1.0.
+
+
+### Tech Stacks Required
+
+* [ReactJS](https://facebook.github.io/react/) - Interactive UI boilerplate
+* [Firebase](https://firebase.google.com/) - Database
+* [Twitter Bootstrap](http://getbootstrap.com/) - UI boilerplate
+* [node.js](https://nodejs.org/en/) - Evented I/O for the backend
+* [TMDB](https://www.themoviedb.org) - The Movie Database to get a bunch of movie lists and details , only one time use
