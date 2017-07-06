@@ -48,7 +48,7 @@ That's for two users , now we need to sample that user's likes & dislikes set to
 #### Tech Stacks Required
 
 * [ReactJS](https://facebook.github.io/react/) - Interactive UI boilerplate
-* [Firebase](https://firebase.google.com/) - Database
+* [Firebase](https://firebase.google.com/) - Database (npm install -g firebase-cli then firebase init)
 * [Twitter Bootstrap](http://getbootstrap.com/) - UI boilerplate
 * [yarn](https://yarnpkg.com/lang/en/) - Evented I/O for the backend
 * [TMDB](https://www.themoviedb.org) - The Movie Database to get a bunch of movie lists and details , only one time use
