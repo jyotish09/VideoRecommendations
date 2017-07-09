@@ -29,7 +29,7 @@ module.exports = {
             },
             // Used for Bootstrap Less Source Files
             {
-                test: /\.less/,
+                test: /\.less$/,
                 use: [{
                         loader: "style-loader"
                     },
@@ -43,7 +43,7 @@ module.exports = {
             },
             // Used for Bootstrap Less Source Files
             {
-                test: /\.css/,
+                test: /\.css$/,
                 use: [{
                         loader: "style-loader"
                     },
