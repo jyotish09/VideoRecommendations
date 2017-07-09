@@ -26,6 +26,36 @@ module.exports = {
                 test: /\.jsx$/,
                 loader: 'babel-loader',
                 exclude: /node_modules/
+            },
+            // Used for Bootstrap Less Source Files
+            {
+                test: /\.less/,
+                use: [{
+                        loader: "style-loader"
+                    },
+                    {
+                        loader: "css-loader"
+                    },
+                    {
+                        loader: "less-loader"
+                    }
+                ]
+            },
+            // Used for Bootstrap Less Source Files
+            {
+                test: /\.css/,
+                use: [{
+                        loader: "style-loader"
+                    },
+                    {
+                        loader: "css-loader"
+                    }
+                ]
+            },
+            // Used for Bootstrap Glyphicon Fonts
+            {
+                test: /\.(woff2|woff|ttf|svg|eot)$/,
+                loader: 'file-loader'
             }
         ]
     },
