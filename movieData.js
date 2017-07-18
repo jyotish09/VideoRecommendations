@@ -1,7 +1,7 @@
 
 // Trying to get the data from MOVIE DB
 
-var url = 'https://api.themoviedb.org/3/movie/top_rated?api_key=c4256d179ecab5b53d16d45b9eb77dc9&language=en-US&page=';
+var url = 'https://api.themoviedb.org/3/movie/top_rated?api_key=<<KEY>>&language=en-US&page=';
 var finalList = new Array();
 
 var processStatus = function (response) {
