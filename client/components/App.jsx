@@ -6,13 +6,19 @@ import style from './style.css';
 export default class App extends React.Component {
     render() {
         console.log(fire);
+        var movieBox = {
+                        border: '1px solid rgb(44, 69, 202)',
+                        paddingBottom: '1%',
+                        borderRadius: '10px',
+                        textAlign: 'left'
+                    }
         return (
             <div className="container text-center">
                 <h2>Movie Recommendation</h2>
                 <div>
                     <div className="row">
 
-                        <div className="col-xs-3">
+                        <div className="col-xs-3" style={movieBox}>
                             <h3>Good Will Hunting</h3>
                             <div className="row">
                               <div className="col-sm-6">
