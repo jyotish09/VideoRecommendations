@@ -40,10 +40,10 @@ export default class App extends React.Component {
 
                         <div className="col-xs-9">
                             <div className="row">
-                                <div className="col-sm-10">
+                                <div className="col-sm-11">
                                     <ProgressBar active bsStyle="success" now={80}/>
                                 </div>
-                                <div className="col-sm-2">80%</div>
+                                <div className="col-sm-1">80%</div>
                             </div>
                             <ProgressBar active bsStyle="info" now={60}/>
                             <ProgressBar active bsStyle="warning" now={40}/>
