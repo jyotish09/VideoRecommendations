@@ -20,7 +20,7 @@ export default class App extends React.Component {
 
                         <div className="col-xs-3" style={movieBox}>
                             <h3>Good Will Hunting</h3>
-                            <div className="row">
+                            <div className="row text-center">
                               <div className="col-sm-6">
                                  <ButtonToolbar>
                                      <Button bsStyle="primary" bsSize="large">
