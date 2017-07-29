@@ -2,7 +2,7 @@
 // Trying to get the randomuser data
 
 var url = 'https://randomuser.me/api/?results=1000';
-var finalData =[], promises=[], users = [];
+var finalData =[], promises=[];
 
     promises.push(
         fetch(url)
@@ -20,9 +20,11 @@ var finalData =[], promises=[], users = [];
 Promise.all(promises).then(function() {
     var list = finalData[0];
     for(i in list){
-        users.push({ "name" : list[i].name.first.toUpperCase()+"_"+list[i].name.last.toLocaleUpperCase() , "ID" : list[i].login.username});
+        firebase.database().ref('users/' + list[i].login.username).set({
+                name: list[i].name.first.toUpperCase()+"_"+list[i].name.last.toLocaleUpperCase(),
+                id: list[i].login.username
+              });
     }
-    console.log(users);
 }, function(err) {
     console.log(err);
 });
