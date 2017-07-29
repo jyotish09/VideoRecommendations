@@ -1,7 +1,7 @@
 
 // Trying to get the randomuser data
 
-var url = 'https://randomuser.me/api/?results=100';
+var url = 'https://randomuser.me/api/?results=1000';
 var finalData =[], promises=[], users = [];
 
     promises.push(
