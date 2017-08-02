@@ -33,7 +33,7 @@ Promise.all(promises).then(function() {
               });
         }
     }
-    console.log(fire);
+    //console.log(fire);
 }, function(err) {
     console.log(err);
 });
