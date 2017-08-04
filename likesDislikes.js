@@ -1,6 +1,16 @@
 var t1 = firebase.database().ref("movies/");
 var promises =[], movies = [] , users = [];
 
+function randNumGen(){
+    var arr = []
+    while(arr.length < 400){
+        var randomnumber = Math.ceil(Math.random()*1000)
+        if(arr.indexOf(randomnumber) > -1) continue;
+        arr[arr.length] = randomnumber;
+    }
+    return arr;
+}
+
 promises.push(t1.once('value').then(function(snapshot) {
   // The Promise was "fulfilled" (it succeeded).
   t1 = (snapshot.val());
@@ -23,16 +33,16 @@ promises.push(t2.once('value').then(function(snapshot) {
   console.error(error);
 }));
 
-Promise.all(promises).then(function() {
-  console.log(movies);
-  //for(i in movies){console.log(movies[i]);}
-  //console.log(users)
-  //console.log(true);
-  var arr = []
-  while(arr.length < 200){
-      var randomnumber = Math.ceil(Math.random()*1000)
-      if(arr.indexOf(randomnumber) > -1) continue;
-      arr[arr.length] = randomnumber;
+Promise.all(promises).then(function(){
+  for(i=0;i<movies.length;i++){
+      var randUsers = randNumGen();
+
+      //DB for liked & disliked movies with movie ID
+      firebase.database().ref('interests/' + movies[i].id).set({
+            liked : randUsers.slice(0,200),
+            disliked : randUsers.slice(200,400)
+       });
   }
+    console.log(movies);
 
 });
