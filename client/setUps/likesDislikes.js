@@ -3,7 +3,7 @@ var promises =[], movies = [] , users = [];
 
 function randNumGen(){
     var arr = []
-    while(arr.length < 400){
+    while(arr.length < 600){
         var randomnumber = Math.ceil(Math.random()*1000)
         if(arr.indexOf(randomnumber) > -1) continue;
         arr[arr.length] = randomnumber;
@@ -38,11 +38,16 @@ Promise.all(promises).then(function(){
       var randUsers = randNumGen();
 
       //DB for liked & disliked movies with movie ID
+      console.log(movies[i].title);
+      console.log("liked");
+      console.log(randUsers.slice(0,300));
+      console.log("disliked");
+      console.log(randUsers.slice(300,600));
       firebase.database().ref('interests/' + movies[i].id).set({
-            liked : randUsers.slice(0,200),
-            disliked : randUsers.slice(200,400)
+            liked : randUsers.slice(0,300),
+            disliked : randUsers.slice(300,600)
        });
   }
-    console.log(movies);
+
 
 });
