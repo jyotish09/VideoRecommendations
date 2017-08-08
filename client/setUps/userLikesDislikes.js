@@ -16,10 +16,11 @@ promises.push(t1.once('value').then(function(snapshot) {
 Promise.all(promises).then(function(){
    //console.log(movieInterests);
   for(i in movieInterests){
-    // console.log(i);
+    console.log(i);
     // console.log(movieInterests[i].disliked);
     // console.log(movieInterests[i].liked);
-    // _.contains(sample,540);
+    console.log(_.contains(movieInterests[i].disliked,540));
+    console.log(_.contains(movieInterests[i].liked,540));
   }
 
 });
