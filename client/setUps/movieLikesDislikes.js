@@ -43,7 +43,7 @@ Promise.all(promises).then(function(){
       console.log(randUsers.slice(0,300));
       console.log("disliked");
       console.log(randUsers.slice(300,600));
-      firebase.database().ref('interests/' + movies[i].id).set({
+      firebase.database().ref('movieInterests/' + movies[i].id).set({
             liked : randUsers.slice(0,300),
             disliked : randUsers.slice(300,600)
        });
