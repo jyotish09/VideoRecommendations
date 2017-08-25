@@ -1,5 +1,5 @@
 var t1 = firebase.database().ref("movieInterests/");
-var promises =[], movieInterests = {} , users = [], userInterests = {};
+var promises =[], movieInterests = {} , users = [], userInterests = {}, tempLike = [],tempDislike = [];
 
 promises.push(t1.once('value').then(function(snapshot) {
   // The Promise was "fulfilled" (it succeeded).
@@ -27,11 +27,25 @@ promises.push(t2.once('value').then(function(snapshot) {
 
 
 Promise.all(promises).then(function(){
-  for(i in movieInterests){
-    if(_.contains(movieInterests[i].disliked,540))
-       console.log(i+" disliked");
-    if(_.contains(movieInterests[i].liked,540))
-       console.log(i+" liked");
-  }
+       for(i=0;i<1000;i++){
+           //console.log("users[0].id wil have 0 , will work on it later");
+           for(j in movieInterests){
+               if(_.contains(movieInterests[j].disliked,i)){
+                   tempDislike.push(j);
+                }
+               if(_.contains(movieInterests[j].liked,i)){
+                   tempLike.push(j);
+                }
+           }
+           userInterests[users[i].id]={"liked":tempLike,"disliked":tempDislike};
+           firebase.database().ref('userInterests/' + users[i].id).set({
+                 liked: tempLike,
+                 disliked: tempDislike
+               });
+           tempLike =[],tempDislike=[];
+       }
+
+
+  console.log(userInterests);
 
 });
