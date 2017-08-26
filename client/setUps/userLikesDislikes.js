@@ -27,7 +27,7 @@ promises.push(t2.once('value').then(function(snapshot) {
 
 
 Promise.all(promises).then(function(){
-       for(i=0;i<1000;i++){
+       for(i=0;i<100;i++){
            //console.log("users[0].id wil have 0 , will work on it later");
            for(j in movieInterests){
                if(_.contains(movieInterests[j].disliked,i)){
