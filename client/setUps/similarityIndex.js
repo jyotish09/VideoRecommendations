@@ -32,7 +32,8 @@ for (i in userInterests) {
             var bLiked = userDetails.liked,
                 bDisliked = userDetails.disliked;
             similarity = (_.intersection(aLiked, bLiked).length+_.intersection(aDisliked, bDisliked).length-_.intersection(aLiked, bDisliked).length-_.intersection(aDisliked, bLiked).length) / _.union(aLiked, bLiked, aDisliked, bDisliked).length
-            similarUsers.push({id : nthUser(k), value : similarity});
+            if(similarity > 0)
+                similarUsers.push({id : nthUser(k), value : similarity});
         }
 
     }
