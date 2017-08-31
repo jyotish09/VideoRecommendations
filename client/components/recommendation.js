@@ -1,10 +1,10 @@
 var promises = [],
     data = [],
-    userInterests ,
-    movieInterests ,
-    users ,
-    similarUsers ,
-    movies ;
+    userInterests,
+    movieInterests,
+    users,
+    similarUsers,
+    movies;
 
 function nthUser(n) {
     var i = 1;
@@ -31,17 +31,44 @@ promises.push(t1.once('value').then(function(snapshot) {
 }));
 
 
-function getRecommendation(user) {
+function getRecommendation(userInfo, movies, movieInterests, randomUserSimilars, users) {
+    /* Taking Top 3 similar users to a particular user and giving recommendations from them */
+    console.log(userInfo);
+    var top3Union = (_.union(
+        userInterests[randomUserSimilars.similarityIndexes[0].id].liked,
+        userInterests[randomUserSimilars.similarityIndexes[1].id].liked,
+        userInterests[randomUserSimilars.similarityIndexes[2].id].liked)
+    );
+
+
+    console.log("Current Usere's Interests");
+    console.log(userInterests[userInfo.id].liked);
+
+    var suggestions = _.difference(
+            top3Union , userInterests[userInfo.id].liked
+        );
+    console.log(suggestions.length+" Suggestions from top 3 users similar : ");
+    console.log(suggestions);
+
+    for(i in suggestions){
+        console.log(movies[suggestions[i]].original_title);
+    }
 
 }
 
 
-Promise.all(promises).then(function(){
+Promise.all(promises).then(function() {
 
-    movieInterests = data[0] ,
-    movies = data[1] ,
-    similarUsers = data[2] ,
-    userInterests = data[3] ,
-    users = data[4] ;
+    movieInterests = data[0],
+        movies = data[1],
+        similarUsers = data[2],
+        userInterests = data[3],
+        users = data[4];
+
+    var randomUser = users[nthUser((Math.floor(Math.random() * 100) + 1))];
+    var randomUserSimilars = similarUsers[randomUser.id];
+
+    var recommendations = getRecommendation(randomUser, movies, movieInterests, randomUserSimilars, users);
+
 
 });
