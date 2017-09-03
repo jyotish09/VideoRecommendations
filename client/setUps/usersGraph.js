@@ -1,21 +1,30 @@
 var promises = [],
     data = [],
-    userInterests,
-    movieInterests,
     users,
     similarUsers,
-    movies;
+    node = [],
+    link = [];
 
-function nthUser(n) {
-    var i = 1;
+function userNvalue(x) {
+    var i = 0;
     for (j in users) {
-        if (i == n) {
-            return j;
+        if (j == x) {
+            return i;
         } else {
             i++;
         }
     }
 }
+
+function randomColorGenerator() {
+  var hexLetter = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += hexLetter[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
 var t1 = firebase.database().ref("/");
 
 promises.push(t1.once('value').then(function(snapshot) {
@@ -39,6 +48,8 @@ Promise.all(promises).then(function() {
     console.log(similarUsers);
     console.log("users");
     console.log(users);
+
+
 
 
 });
