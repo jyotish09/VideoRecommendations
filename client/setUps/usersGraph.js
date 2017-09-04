@@ -2,8 +2,7 @@ var promises = [],
     data = [],
     users,
     similarUsers,
-    node = [],
-    link = [];
+    node = [];
 
 function userNvalue(x) {
     var i = 0;
@@ -71,15 +70,33 @@ Promise.all(promises).then(function() {
 
 
     //Links Based on Similarity Values
-    var k = 0;
+    var k = 0,
+        link = [];
+
     for (i in similarUsers) {
-        console.groupCollapsed("Linked with " + userNvalue(i) + " " + i +" includes "+linked.length+" nodes");
+        var srcNode = userNvalue(i)
+        console.groupCollapsed("Linked with " + srcNode + " " + i +" includes "+linked.length+" nodes");
 
         var linked = similarUsers[i]["similarityIndexes"];
+        var sum = linked.
+                      map(function(item){ return item.value; }).
+                      reduce(function(a, b){ return a + b; }, 0);
+
         for (j in linked) {
-            var value = (linked[j].value);
-            console.log(userNvalue(linked[j].id)+" : "+value);
-            console.log(k++);
+            var value = Math.ceil((linked[j].value/sum)*100);
+            var destNode = userNvalue(linked[j].id)
+            console.log(k);
+            console.log(destNode+" : "+value);
+
+            link.push({"src":srcNode,"dest":destNode,"val":value});
+
+            firebase.database().ref('links/' + k).set({
+                src: srcNode,
+                dest: destNode,
+                val: value
+            });
+
+            k++;
         }
 
         console.groupEnd();
