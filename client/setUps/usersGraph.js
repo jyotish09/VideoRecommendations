@@ -17,12 +17,12 @@ function userNvalue(x) {
 }
 
 function randomColorGenerator() {
-  var hexLetter = '0123456789ABCDEF';
-  var color = '#';
-  for (var i = 0; i < 6; i++) {
-    color += hexLetter[Math.floor(Math.random() * 16)];
-  }
-  return color;
+    var hexLetter = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+        color += hexLetter[Math.floor(Math.random() * 16)];
+    }
+    return color;
 }
 
 var t1 = firebase.database().ref("/");
@@ -42,14 +42,33 @@ promises.push(t1.once('value').then(function(snapshot) {
 Promise.all(promises).then(function() {
 
     similarUsers = data[2],
-    users = data[4];
+    users = data[4],
+    k = 0;
 
     console.log("similarUsers");
     console.log(similarUsers);
     console.log("users");
     console.log(users);
 
+    //Nodes in the Graph
+    for (i in users) {
+        firebase.database().ref('nodes/'+k).set({
+              name:i,
+              group:k++
+            });
+    }
+
+    //Color Groups for node
+    for(var i=0;i<100;i++){
+        var x = randomColorGenerator();
+        console.log('%c WHOA! '+x, 'background :'+ x);
+        firebase.database().ref('color/'+i).set({
+              color:x
+            });
+    }
 
 
+    //Links Based on Similarity Values
+    
 
 });
