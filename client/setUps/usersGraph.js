@@ -42,8 +42,8 @@ promises.push(t1.once('value').then(function(snapshot) {
 Promise.all(promises).then(function() {
 
     similarUsers = data[2],
-    users = data[4],
-    k = 0;
+        users = data[4],
+        k = 0;
 
     console.log("similarUsers");
     console.log(similarUsers);
@@ -52,23 +52,38 @@ Promise.all(promises).then(function() {
 
     //Nodes in the Graph
     for (i in users) {
-        firebase.database().ref('nodes/'+k).set({
-              name:i,
-              group:k++
-            });
+        firebase.database().ref('nodes/' + k).set({
+            name: i,
+            group: k++
+        });
     }
+    //for(i in node){console.log(node[i].group);}
 
     //Color Groups for node
-    for(var i=0;i<100;i++){
+    for (var i = 0; i < 100; i++) {
         var x = randomColorGenerator();
-        console.log('%c WHOA! '+x, 'background :'+ x);
-        firebase.database().ref('color/'+i).set({
-              color:x
-            });
+        console.log('%c WHOA! ' + x, 'background :' + x);
+        firebase.database().ref('color/' + i).set({
+            color: x
+        });
     }
+    //for(i in color){ console.log('%c TEST '+color[i].color, 'background :'+ color[i].color); }
 
 
     //Links Based on Similarity Values
-    
+    var k = 0;
+    for (i in similarUsers) {
+        console.groupCollapsed("Linked with " + userNvalue(i) + " " + i +" includes "+linked.length+" nodes");
+
+        var linked = similarUsers[i]["similarityIndexes"];
+        for (j in linked) {
+            var value = (linked[j].value);
+            console.log(userNvalue(linked[j].id)+" : "+value);
+            console.log(k++);
+        }
+
+        console.groupEnd();
+    }
+
 
 });
