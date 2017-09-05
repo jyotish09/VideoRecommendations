@@ -2,3 +2,6 @@
     border: 1px solid #73a8d0;
     border-radius: 5px;
 }
+.navbar {
+    border-radius: 0px;
+}
