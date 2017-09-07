@@ -5,3 +5,8 @@
 .navbar {
     border-radius: 0px;
 }
+
+.customBGColor{
+    background-color:#222222;
+    color: #9d9d99;
+}
