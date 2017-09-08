@@ -59,11 +59,11 @@ function getRecommendation(userInfo, movies, movieInterests, randomUserSimilars,
 
 Promise.all(promises).then(function() {
 
-    movieInterests = data[0],
-        movies = data[1],
-        similarUsers = data[2],
-        userInterests = data[3],
-        users = data[4];
+    movieInterests = data[2],
+        movies = data[3],
+        similarUsers = data[5],
+        userInterests = data[6],
+        users = data[7];
 
     var randomUser = users[nthUser((Math.floor(Math.random() * 100) + 1))];
     var randomUserSimilars = similarUsers[randomUser.id];

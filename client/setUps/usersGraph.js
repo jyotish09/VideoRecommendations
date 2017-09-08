@@ -90,11 +90,11 @@ Promise.all(promises).then(function() {
 
             link.push({"src":srcNode,"dest":destNode,"val":value});
 
-            firebase.database().ref('links/' + k).set({
-                src: srcNode,
-                dest: destNode,
-                val: value
-            });
+            // firebase.database().ref('links/' + k).set({
+            //     src: srcNode,
+            //     dest: destNode,
+            //     val: value
+            // });
 
             k++;
         }
