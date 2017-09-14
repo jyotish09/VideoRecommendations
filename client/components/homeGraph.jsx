@@ -11,13 +11,15 @@ import * as d3Force from "d3-force";
 
 class Node extends React.Component {
   render() {
+      color = this.props.color;
+      color = color[this.props.group].color;
     return (
         <circle
           r={5}
           cx={this.props.x}
           cy={this.props.y}
           style={{
-            "fill": color(this.props.group),
+            "fill": color,
             "stroke":"#ffffff",
             "strokeWidth":"1.5px"
           }}/>
@@ -66,8 +68,8 @@ class Graph extends React.Component{
       // refactor entire graph into sub component - force layout shouldn't be
       // manipulating props, though this works
       this.state.force
-                .nodes(this.props.lesmis.nodes)
-                .links(this.props.lesmis.links)
+                .nodes(this.props.nodes)
+                .links(this.props.links)
                 .start()
       this.state.force.on("tick", function (tick, b, c) {
         self.forceUpdate()
@@ -75,7 +77,7 @@ class Graph extends React.Component{
     }
 
     drawLinks() {
-      var links = this.props.lesmis.links.map(function (link, index) {
+      var links = this.props.links.map(function (link, index) {
         return (<Link datum={link} key={index} />)
       })
       return (<g>
@@ -84,7 +86,7 @@ class Graph extends React.Component{
     }
 
     drawNodes() {
-      var nodes = this.props.lesmis.nodes.map(function (node, index) {
+      var nodes = this.props.nodes.map(function (node, index) {
         return (<Node
           key={index}
           x={node.x}
@@ -124,6 +126,27 @@ export default class HomeGraph extends React.Component {
         };
     }
 
+    nodePos(nodes,pos){
+        var i=0;
+        for(i in pos){
+            nodes[i]['x']=pos[i].x;
+            nodes[i]['y']=pos[i].y;
+        }
+        return nodes;
+    }
+
+    linkPoint(links,nodes){
+        var i;
+        for(i in links){
+            links[i]['Sx'] = nodes[links[i].src-1].x;
+            links[i]['Sy'] = nodes[links[i].src-1].y;
+            links[i]['Dx'] = nodes[links[i].dest-1].x;
+            links[i]['Dy'] = nodes[links[i].dest-1].y;
+        }
+
+        return links;
+    }
+
     componentDidMount() {
         var t1 = fire.database().ref("/"),
             promises = [],
@@ -138,20 +161,30 @@ export default class HomeGraph extends React.Component {
                 pos.push({x:X,y:Y});
             }
         //Getting the Cached Value
-        var apiCallNeccessary = localStorage.getItem('nodes') &&
+        var readCache = localStorage.getItem('nodes') &&
                                 localStorage.getItem('links') &&
                                 localStorage.getItem('color') ;
-        if (apiCallNeccessary) {
+        if (readCache) {
             console.log("From localStorage");
+            var nodes = this.nodePos(JSON.parse(localStorage.getItem('nodes')),pos);
+            console.log("New Node Data");
+            console.log(nodes);
+            var links = JSON.parse(localStorage.getItem('links'));
+            console.log("New Links");
+            links = this.linkPoint(links,nodes);
+            console.log(links);
+            var color = JSON.parse(localStorage.getItem('color'));
+            console.log("color");
+            console.log(color);
             this.setState({
-                nodes: JSON.parse(localStorage.getItem('nodes')),
-                links: JSON.parse(localStorage.getItem('links')),
-                color: JSON.parse(localStorage.getItem('color')),
-                positions: pos
+                nodes: nodes,
+                links: links,
+                color: color
             });
         } else {
             //Else set it from the FDB for the first time
             console.log("Calling FDB");
+            var self=this;
             promises.push(t1.once('value').then(function(snapshot) {
                 // The Promise was "fulfilled" (it succeeded).
                 t1 = (snapshot.val());
@@ -163,7 +196,14 @@ export default class HomeGraph extends React.Component {
                 localStorage.setItem('nodes', JSON.stringify(data[4]));
                 localStorage.setItem('links', JSON.stringify(data[1]));
                 localStorage.setItem('color', JSON.stringify(data[0]));
-                self.setState({nodes: data[4], links: data[1], color: data[0],positions: pos});
+                var nodes = self.nodePos(data[4],pos);
+                var links = data[1], color = data[0];
+                console.log("New Node Data");
+                console.log(nodes);
+                console.log("New Links");
+                links = self.linkPoint(links,nodes);
+                console.log(links);
+                self.setState({nodes: nodes, links: links, color: color});
             }, function(error) {
                 // The Promise was rejected.
                 console.error(error);
@@ -186,9 +226,6 @@ export default class HomeGraph extends React.Component {
                 </p>
                 <p>
                     Nodes : {nodesLength}
-                </p>
-                <p>
-                    Positions: {pos}
                 </p>
 
             </div>
