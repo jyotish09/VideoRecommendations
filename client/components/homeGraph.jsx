@@ -11,18 +11,19 @@ import * as d3Force from "d3-force";
 
 class Node extends React.Component {
   render() {
-      color = this.props.color;
-      color = color[this.props.group].color;
+      var temp = this.props.color;
+      var color = temp[this.props.group].color;
+      var look = {
+            "fill": color,
+            "stroke":"#ffffff",
+            "strokeWidth":"1.5px"
+        };
     return (
         <circle
           r={5}
           cx={this.props.x}
           cy={this.props.y}
-          style={{
-            "fill": color,
-            "stroke":"#ffffff",
-            "strokeWidth":"1.5px"
-          }}/>
+          style={look}/>
     )
   }
 }
@@ -31,14 +32,14 @@ class Link extends React.Component {
   render() {
     return (
       <line
-        x1={this.props.datum.source.x}
-        y1={this.props.datum.source.y}
-        x2={this.props.datum.target.x}
-        y2={this.props.datum.target.y}
+        x1={this.props.datum.Sx}
+        y1={this.props.datum.Sy}
+        x2={this.props.datum.Dx}
+        y2={this.props.datum.Dy}
         style={{
-          "stroke":"#8fb9d6",
+          "stroke":"#9eb4b9",
           "strokeOpacity":".5",
-          "strokeWidth": Math.sqrt(this.props.datum.value)
+          "strokeWidth": Math.sqrt(this.props.datum.val)
         }}/>
     );
   }
@@ -48,11 +49,11 @@ class Graph extends React.Component{
 
     constructor(props) {
         super(props);
-        var svgWidth = 800;
-        var svgHeight = 800;
+        var svgWidth = 600;
+        var svgHeight = 600;
         var force = d3.layout.force()
-          .charge(-180)
-          .linkDistance(80)
+          .charge(0)
+          .linkDistance(0)
           .size([svgWidth, svgHeight]);
         this.state = {
           svgWidth: svgWidth,
@@ -79,19 +80,21 @@ class Graph extends React.Component{
     drawLinks() {
       var links = this.props.links.map(function (link, index) {
         return (<Link datum={link} key={index} />)
-      })
+    });
       return (<g>
         {links}
       </g>)
     }
 
     drawNodes() {
+      var colorNodes = this.props.color;
       var nodes = this.props.nodes.map(function (node, index) {
         return (<Node
           key={index}
           x={node.x}
           y={node.y}
-          group={node.group}/>
+          group={node.group}
+          color = {colorNodes}/>
         ) })
       return nodes;
     }
@@ -135,6 +138,33 @@ export default class HomeGraph extends React.Component {
         return nodes;
     }
 
+
+    getRandomNodes(nodes){
+        var tempNodes = new Array();
+        for(var i = 0;i<15;i++){
+            tempNodes.push(nodes[Math.floor(Math.random() * 99)]);
+        }
+        return tempNodes;
+    }
+
+    getLinks(links,nodes){
+        var i,j,tempGroups =[];
+        nodes.forEach(function(i){
+        	tempGroups.push((i.group+1));
+        });
+        console.log("tempGroups");
+        console.log(tempGroups);
+        var tempLinks =  new Array();
+        for(i in nodes){
+        	for(j in links){
+        		if((nodes[i].group+1) == links[j].src && _.contains(tempGroups,links[j].dest)){
+                    tempLinks.push(links[j]);}
+        	}
+        }
+
+        return tempLinks;
+    }
+
     linkPoint(links,nodes){
         var i;
         for(i in links){
@@ -156,8 +186,8 @@ export default class HomeGraph extends React.Component {
 
         //Node's Random Positions
         for(i = 0 ; i < 100 ; i++){
-                X =(600 / 3 + _.random(-150, 150));
-                Y =(600 / 3 + _.random(-25, 25));
+                X =(600 / 2 + _.random(-200, 200));
+                Y =(600 / 2 + _.random(-280, 280));
                 pos.push({x:X,y:Y});
             }
         //Getting the Cached Value
@@ -167,18 +197,21 @@ export default class HomeGraph extends React.Component {
         if (readCache) {
             console.log("From localStorage");
             var nodes = this.nodePos(JSON.parse(localStorage.getItem('nodes')),pos);
-            console.log("New Node Data");
-            console.log(nodes);
+            console.log("Random New Node Data");
+            var tempNodes = this.getRandomNodes(nodes);
+            console.log(tempNodes);
             var links = JSON.parse(localStorage.getItem('links'));
-            console.log("New Links");
+            console.log("Random New Links");
             links = this.linkPoint(links,nodes);
             console.log(links);
+            var tempLinks = this.getLinks(links,tempNodes);
+            console.log(tempLinks);
             var color = JSON.parse(localStorage.getItem('color'));
             console.log("color");
             console.log(color);
             this.setState({
-                nodes: nodes,
-                links: links,
+                nodes: tempNodes,
+                links: tempLinks,
                 color: color
             });
         } else {
@@ -213,20 +246,17 @@ export default class HomeGraph extends React.Component {
     }
 
     render() {
-        var linksLength = this.state.links.length;
-        var nodesLength = this.state.nodes.length;
+        var links = this.state.links;
+        var nodes = this.state.nodes;
+        var color = this.state.color;
         var pos = this.state.positions.length;
         return (
             <div>
                 <p>
-                    homeGraph
+                    15 Random Intra Connected Users
                 </p>
-                <p>
-                    Links : {linksLength}
-                </p>
-                <p>
-                    Nodes : {nodesLength}
-                </p>
+
+                <Graph links={links} nodes={nodes} color={color}/>
 
             </div>
         );

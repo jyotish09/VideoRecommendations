@@ -63,8 +63,6 @@ export default class Main extends React.Component {
                 <NavBarData />
                 <div className="container text-center">
                     <div className="row">
-
-                        HI
                         <HomeGraph />
 
                     </div>
