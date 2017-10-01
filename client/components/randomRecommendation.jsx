@@ -11,6 +11,9 @@ export default class RandomRecommendation extends React.Component {
 
     constructor(props) {
         super(props);
+        this.state={
+            list:[]
+        };
 
     }
 
@@ -71,7 +74,9 @@ export default class RandomRecommendation extends React.Component {
             var userInterests = JSON.parse(localStorage.getItem('userInterests'));
 
             var res = getRecommendation(movies, movieInterests, users, similarUsers, userInterests);
-
+            this.setState({
+                list:res
+            });
 
             console.log(res.length+" Suggestions from top 3 similar users : ");
             for(i in res){
@@ -81,9 +86,21 @@ export default class RandomRecommendation extends React.Component {
     }
 
     render(){
+        var suggestions = this.state.list;
+        var movies = JSON.parse(localStorage.getItem('movies'));
+        var message = suggestions.length+" Suggestions from top 3 similar users : ";
+
+        var lists = <ul>
+        				{suggestions.map((item, i) => {
+        					return <li key={i}>{movies[suggestions[i]].title}</li>;
+        				})}
+    			   </ul>;
+
         return(
             <div className="recommendation">
-                HI
+                
+                {message}
+                {lists}
             </div>
         )
     }

@@ -66,7 +66,7 @@ export default class Main extends React.Component {
                             <HomeGraph />
                         </div>
                         <div className="col-md-6">
-                            Random User Recommended User Suggestions
+                            Random User's Recommendations
 
                             <RandomRecommendation />
                         </div>
