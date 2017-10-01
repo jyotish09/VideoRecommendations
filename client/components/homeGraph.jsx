@@ -30,6 +30,7 @@ class Node extends React.Component {
 
 class Link extends React.Component {
   render() {
+    //Math.sqrt(this.props.datum.val)
     return (
       <line
         x1={this.props.datum.Sx}
@@ -39,7 +40,7 @@ class Link extends React.Component {
         style={{
           "stroke":"#9eb4b9",
           "strokeOpacity":".5",
-          "strokeWidth": Math.sqrt(this.props.datum.val)
+          "strokeWidth": 1.5
         }}/>
     );
   }
@@ -141,7 +142,7 @@ export default class HomeGraph extends React.Component {
 
     getRandomNodes(nodes){
         var tempNodes = new Array();
-        for(var i = 0;i<15;i++){
+        for(var i = 0;i<20;i++){
             tempNodes.push(nodes[Math.floor(Math.random() * 99)]);
         }
         return tempNodes;
@@ -203,7 +204,6 @@ export default class HomeGraph extends React.Component {
             var links = JSON.parse(localStorage.getItem('links'));
             console.log("Random New Links");
             links = this.linkPoint(links,nodes);
-            console.log(links);
             var tempLinks = this.getLinks(links,tempNodes);
             console.log(tempLinks);
             var color = JSON.parse(localStorage.getItem('color'));
@@ -236,7 +236,9 @@ export default class HomeGraph extends React.Component {
                 console.log("New Links");
                 links = self.linkPoint(links,nodes);
                 console.log(links);
-                self.setState({nodes: nodes, links: links, color: color});
+                var tempNodes = self.getRandomNodes(nodes);
+                var tempLinks = self.getLinks(links,tempNodes);
+                self.setState({nodes: tempNodes, links: tempLinks, color: color});
             }, function(error) {
                 // The Promise was rejected.
                 console.error(error);
@@ -253,7 +255,7 @@ export default class HomeGraph extends React.Component {
         return (
             <div>
                 <p>
-                    15 Random Intra Connected Users
+                    20 Random Intra Connected Users
                 </p>
 
                 <Graph links={links} nodes={nodes} color={color}/>

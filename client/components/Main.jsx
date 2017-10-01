@@ -1,9 +1,6 @@
 import React from 'react';
 
 import {
-    Button,
-    ButtonToolbar,
-    ProgressBar,
     Navbar,
     Nav,
     NavItem,
@@ -15,6 +12,7 @@ import 'bootstrap/less/bootstrap.less';
 import fire from './firebaseKeys.js';
 import style from './style.css';
 import HomeGraph from './homeGraph.jsx';
+import RandomRecommendation from './randomRecommendation.jsx'
 
 class NavBarData extends React.Component {
     render(){
@@ -63,7 +61,15 @@ export default class Main extends React.Component {
                 <NavBarData />
                 <div className="container text-center">
                     <div className="row">
-                        <HomeGraph />
+
+                        <div className="col-md-6">
+                            <HomeGraph />
+                        </div>
+                        <div className="col-md-6">
+                            Random User Recommended User Suggestions
+
+                            <RandomRecommendation />
+                        </div>
 
                     </div>
                 </div>

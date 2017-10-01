@@ -1,13 +1,7 @@
-var promises = [],
-    data = [],
-    userInterests,
-    movieInterests,
-    users,
-    similarUsers,
-    movies;
+import _ from 'underscore';
 
-function nthUser(n) {
-    var i = 1;
+function nthUser(n,users) {
+    var i = 1,j;
     for (j in users) {
         if (i == n) {
             return j;
@@ -16,24 +10,16 @@ function nthUser(n) {
         }
     }
 }
-var t1 = firebase.database().ref("/");
-
-promises.push(t1.once('value').then(function(snapshot) {
-    // The Promise was "fulfilled" (it succeeded).
-    t1 = (snapshot.val());
-    for (i in t1) {
-        data.push(t1[i]);
-    }
-    console.log(Promise.resolve("FDB Read Success"));
-}, function(error) {
-    // The Promise was rejected.
-    console.error(error);
-}));
 
 
-function getRecommendation(userInfo, movies, movieInterests, randomUserSimilars, users) {
+function getRecommendation(movies, movieInterests, users, similarUsers, userInterests) {
     /* Taking Top 3 similar users to a particular user and giving recommendations from them */
+    var userInfo = users[nthUser((Math.floor(Math.random() * 100) + 1),users)],i;
+    console.log("userInfo");
     console.log(userInfo);
+    var randomUserSimilars = similarUsers[userInfo.id];
+    console.log(randomUserSimilars);
+
     var top3Union = (_.union(
         userInterests[randomUserSimilars.similarityIndexes[0].id].liked,
         userInterests[randomUserSimilars.similarityIndexes[1].id].liked,
@@ -56,19 +42,4 @@ function getRecommendation(userInfo, movies, movieInterests, randomUserSimilars,
 
 }
 
-
-Promise.all(promises).then(function() {
-
-    movieInterests = data[2],
-        movies = data[3],
-        similarUsers = data[5],
-        userInterests = data[6],
-        users = data[7];
-
-    var randomUser = users[nthUser((Math.floor(Math.random() * 100) + 1))];
-    var randomUserSimilars = similarUsers[randomUser.id];
-
-    var recommendations = getRecommendation(randomUser, movies, movieInterests, randomUserSimilars, users);
-
-
-});
+export default getRecommendation;
