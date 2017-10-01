@@ -70,7 +70,13 @@ export default class RandomRecommendation extends React.Component {
             var similarUsers = JSON.parse(localStorage.getItem('similarUsers'));
             var userInterests = JSON.parse(localStorage.getItem('userInterests'));
 
-            getRecommendation(movies, movieInterests, users, similarUsers, userInterests)
+            var res = getRecommendation(movies, movieInterests, users, similarUsers, userInterests);
+
+
+            console.log(res.length+" Suggestions from top 3 similar users : ");
+            for(i in res){
+                console.log(movies[res[i]].title);
+            }
         }
     }
 

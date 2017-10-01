@@ -33,12 +33,8 @@ function getRecommendation(movies, movieInterests, users, similarUsers, userInte
     var suggestions = _.difference(
             top3Union , userInterests[userInfo.id].liked
         );
-    console.log(suggestions.length+" Suggestions from top 3 similar users : ");
-    console.log(suggestions);
 
-    for(i in suggestions){
-        console.log(movies[suggestions[i]].title);
-    }
+    return suggestions;
 
 }
 
