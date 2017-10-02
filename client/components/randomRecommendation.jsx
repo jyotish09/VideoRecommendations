@@ -81,17 +81,17 @@ export default class RandomRecommendation extends React.Component {
                 list:res
             });
 
-            console.log(res.length+" Suggestions from top 3 similar users : ");
-            for(i in res){
-                console.log(movies[res[i]].title);
-            }
+            // console.log(res.length+" Suggestions from top 3 similar users : ");
+            // for(i in res){
+            //     console.log(movies[res[i]].title);
+            // }
         }
     }
 
     render(){
         var suggestions = this.state.list;
         var movies = JSON.parse(localStorage.getItem('movies'));
-        var message = suggestions.length+" Suggestions from top 3 similar users : ";
+        var message = suggestions.length+" Suggestions from 3 closest similar users : ";
 
         var lists = <ListGroup>
         				{suggestions.map((item, i) => {

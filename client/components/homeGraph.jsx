@@ -145,6 +145,11 @@ export default class HomeGraph extends React.Component {
         for(var i = 0;i<20;i++){
             tempNodes.push(nodes[Math.floor(Math.random() * 99)]);
         }
+
+        localStorage.setItem('randomUser', JSON.stringify((tempNodes[Math.floor(Math.random() * 19)])) );
+        console.log("randomUser");
+        console.log((tempNodes[Math.floor(Math.random() * 19)]));
+
         return tempNodes;
     }
 
@@ -153,8 +158,6 @@ export default class HomeGraph extends React.Component {
         nodes.forEach(function(i){
         	tempGroups.push((i.group+1));
         });
-        console.log("tempGroups");
-        console.log(tempGroups);
         var tempLinks =  new Array();
         for(i in nodes){
         	for(j in links){
@@ -198,17 +201,11 @@ export default class HomeGraph extends React.Component {
         if (readCache) {
             console.log("From localStorage");
             var nodes = this.nodePos(JSON.parse(localStorage.getItem('nodes')),pos);
-            console.log("Random New Node Data");
             var tempNodes = this.getRandomNodes(nodes);
-            console.log(tempNodes);
             var links = JSON.parse(localStorage.getItem('links'));
-            console.log("Random New Links");
             links = this.linkPoint(links,nodes);
             var tempLinks = this.getLinks(links,tempNodes);
-            console.log(tempLinks);
             var color = JSON.parse(localStorage.getItem('color'));
-            console.log("color");
-            console.log(color);
             this.setState({
                 nodes: tempNodes,
                 links: tempLinks,
@@ -224,18 +221,13 @@ export default class HomeGraph extends React.Component {
                 for (i in t1) {
                     data.push(t1[i]);
                 }
-                console.log(Promise.resolve("FDB Success"));
                 //console.log(data);
                 localStorage.setItem('nodes', JSON.stringify(data[4]));
                 localStorage.setItem('links', JSON.stringify(data[1]));
                 localStorage.setItem('color', JSON.stringify(data[0]));
                 var nodes = self.nodePos(data[4],pos);
                 var links = data[1], color = data[0];
-                console.log("New Node Data");
-                console.log(nodes);
-                console.log("New Links");
                 links = self.linkPoint(links,nodes);
-                console.log(links);
                 var tempNodes = self.getRandomNodes(nodes);
                 var tempLinks = self.getLinks(links,tempNodes);
                 self.setState({nodes: tempNodes, links: tempLinks, color: color});
