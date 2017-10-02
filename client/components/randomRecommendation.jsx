@@ -1,7 +1,10 @@
 //randomRecommendation
 
 import React from 'react';
-import {} from 'react-bootstrap';
+import {
+    ListGroup,
+    ListGroupItem
+} from 'react-bootstrap';
 import _ from 'underscore';
 import fire from './firebaseKeys.js';
 import style from './style.css';
@@ -90,15 +93,15 @@ export default class RandomRecommendation extends React.Component {
         var movies = JSON.parse(localStorage.getItem('movies'));
         var message = suggestions.length+" Suggestions from top 3 similar users : ";
 
-        var lists = <ul>
+        var lists = <ListGroup>
         				{suggestions.map((item, i) => {
-        					return <li key={i}>{movies[suggestions[i]].title}</li>;
+        					return <ListGroupItem key={i}>{movies[suggestions[i]].title}</ListGroupItem>;
         				})}
-    			   </ul>;
+    			   </ListGroup>;
 
         return(
             <div className="recommendation">
-                
+
                 {message}
                 {lists}
             </div>

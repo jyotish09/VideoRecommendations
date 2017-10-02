@@ -14,3 +14,22 @@
 .recommendation{
     padding-top: 3%;
 }
+
+.list-group-item {
+    position: relative;
+    display: block;
+    padding: 10px;
+    margin-bottom: -1px;
+    background-color: #222;
+    border: 1px solid #ddd;
+    max-width: 350px;
+    margin-left: 20%;
+    max-height: 300px;
+    overflow-y:scroll;
+}
+
+.list-group{
+    padding-top: 3%;
+    overflow-y: scroll;
+    height: 500px;
+}
