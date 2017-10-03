@@ -14,7 +14,7 @@ function nthUser(n,users) {
 
 function getRecommendation(movies, movieInterests, users, similarUsers, userInterests) {
     /* Taking Top 3 similar users to a particular user and giving recommendations from them */
-    var userInfo = users[nthUser((Math.floor(Math.random() * 100) + 1),users)],i;
+    //var userInfo = users[nthUser((Math.floor(Math.random() * 100) + 1),users)],i;
     //console.log("userInfo");
     //console.log(userInfo);
     var randomUser = JSON.parse(localStorage.getItem('randomUser'));
@@ -32,7 +32,7 @@ function getRecommendation(movies, movieInterests, users, similarUsers, userInte
     // console.log(userInterests[userInfo.id].liked);
 
     var suggestions = _.difference(
-            top3Union , userInterests[userInfo.id].liked
+            top3Union , userInterests[randomUser.name].liked
         );
 
     return suggestions;

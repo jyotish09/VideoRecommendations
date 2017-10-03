@@ -15,7 +15,9 @@ export default class RandomRecommendation extends React.Component {
     constructor(props) {
         super(props);
         this.state={
-            list:[]
+            list:[],
+            userDetail : JSON.parse(localStorage.getItem('randomUser')),
+            userColorIcon : ''
         };
 
     }
@@ -76,9 +78,16 @@ export default class RandomRecommendation extends React.Component {
             var similarUsers = JSON.parse(localStorage.getItem('similarUsers'));
             var userInterests = JSON.parse(localStorage.getItem('userInterests'));
 
+            var userColor = this.state.userDetail.group;
+            var colors = JSON.parse(localStorage.getItem('color'));
+            userColor = colors[userColor].color;
+            console.log("userColor");
+            console.log(userColor);
+
             var res = getRecommendation(movies, movieInterests, users, similarUsers, userInterests);
             this.setState({
-                list:res
+                list:res,
+                userColorIcon:userColor
             });
 
             // console.log(res.length+" Suggestions from top 3 similar users : ");
@@ -92,7 +101,7 @@ export default class RandomRecommendation extends React.Component {
         var suggestions = this.state.list;
         var movies = JSON.parse(localStorage.getItem('movies'));
         var message = suggestions.length+" Suggestions from 3 closest similar users : ";
-
+        var usrClr = {color:this.state.userColorIcon}
         var lists = <ListGroup>
         				{suggestions.map((item, i) => {
         					return <ListGroupItem key={i}>{movies[suggestions[i]].title}</ListGroupItem>;
@@ -101,8 +110,8 @@ export default class RandomRecommendation extends React.Component {
 
         return(
             <div className="recommendation">
-                
-                {message}
+
+                <div style={usrClr} >{message}</div>
                 {lists}
             </div>
         )
