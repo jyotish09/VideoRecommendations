@@ -101,7 +101,7 @@ export default class RandomRecommendation extends React.Component {
 
         return(
             <div className="recommendation">
-
+                
                 {message}
                 {lists}
             </div>

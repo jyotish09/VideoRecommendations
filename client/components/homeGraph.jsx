@@ -146,10 +146,9 @@ export default class HomeGraph extends React.Component {
             tempNodes.push(nodes[Math.floor(Math.random() * 99)]);
         }
 
-        localStorage.setItem('randomUser', JSON.stringify((tempNodes[Math.floor(Math.random() * 19)])) );
+        localStorage.setItem('randomUser', JSON.stringify((tempNodes[Math.floor(Math.random() * 19)])));
         console.log("randomUser");
-        console.log((tempNodes[Math.floor(Math.random() * 19)]));
-
+        console.log(JSON.parse(localStorage.getItem('randomUser')));
         return tempNodes;
     }
 
