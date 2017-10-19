@@ -10,7 +10,7 @@ Before we start the idea is to make simple one enough to grasp the concept and t
 
     [X] The Math behind the Similarity Index
     [X] Tech Stacks Required to build the project
-    [ ] The real code
+    [X] The real code
 
 #### The Math
 

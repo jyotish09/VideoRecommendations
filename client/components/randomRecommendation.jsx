@@ -101,7 +101,13 @@ export default class RandomRecommendation extends React.Component {
         var suggestions = this.state.list;
         var movies = JSON.parse(localStorage.getItem('movies'));
         var message = suggestions.length+" Suggestions from 3 closest similar users : ";
-        var usrClr = {color:this.state.userColorIcon}
+        var usrClr = {
+                        color:this.state.userColorIcon,
+                        backgroundColor: "black",
+                        borderRadius: "10px",
+                        maxWidth: "330px",
+                        marginLeft: "21%"
+                    }
         var lists = <ListGroup>
         				{suggestions.map((item, i) => {
         					return <ListGroupItem key={i}>{movies[suggestions[i]].title}</ListGroupItem>;
